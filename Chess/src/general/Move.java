@@ -64,23 +64,23 @@ public class Move {
 	 * Move piece in selected square to destination square.
 	 * Returns true if the move was successful.
 	 * @param player
-	 * @param srcSq
-	 * @param destSq
+	 * @param sourceSquare
+	 * @param destinationSquare
 	 * @return boolean
 	 */
-	public boolean doMove(Player player, String srcSq, String destSq) {
+	public boolean doMove(Player player, String sourceSquare, String destinationSquare) {
 		//check source square notation for validity
-		if (checkSqValidity(srcSq)) {
+		if (checkSqValidity(sourceSquare)) {
 			//check destination square notation for validity
-			if (checkSqValidity(destSq)) {
+			if (checkSqValidity(destinationSquare)) {
 				//find the piece based on the source square notation.
-				Piece piece = getBoard().notationToPiece(srcSq);
+				Piece piece = getBoard().notationToPiece(sourceSquare);
 				//make sure the piece is owned by the player
 				if (piece.getColor()==player.getSide()) {
 					//get all movements that are allowed for the selected piece
 					ArrayList<ArrayList<Integer>> legalMoves = possiblePieceMoves(piece, false);
 					//array coordinates for new destination
-					Index newLoc = getBoard().notationToIndex(destSq);
+					Index newLoc = getBoard().notationToIndex(destinationSquare);
 					//find out if destination location is included in the legal moves list
 					ArrayList<Integer> x = legalMoves.get(0); //list of row numbers
 					ArrayList<Integer> y = legalMoves.get(1); //list of column numbers
@@ -98,9 +98,9 @@ public class Move {
 //							board.updateGameState(); //populate the board with new location of pieces.
 							//place source and destination square to history of moves
 							if (player.getSide()==0) { //if white
-								getHistoryOfMoves().addWhiteMove(srcSq, destSq); //add white piece move to history
+								getHistoryOfMoves().addWhiteMove(sourceSquare, destinationSquare); //add white piece move to history
 							} else if (player.getSide()==1) { //if black
-								getHistoryOfMoves().addBlackMove(srcSq, destSq); //add black piece move to history
+								getHistoryOfMoves().addBlackMove(sourceSquare, destinationSquare); //add black piece move to history
 							}
 							//promote pawns to queens if they reach enemy's end
 							getBoard().promotePawnsToQueen(player.getSide());
@@ -242,7 +242,8 @@ public class Move {
 	 * @return
 	 */
 	private Boolean isOnBoard(int x, int y) {
-		if ((x>=0 && x<=7) && (y>=0&&y<=7)) {
+		int BOARD_LIMIT = 7;
+		if ((x>=0 && x<=BOARD_LIMIT) && (y>=0 && y<=BOARD_LIMIT)) {
 			return true;
 		} else {
 			return false;

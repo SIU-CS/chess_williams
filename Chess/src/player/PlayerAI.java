@@ -334,7 +334,7 @@ public class PlayerAI extends Player {
 		//get an array containing enemy piece and the highest value piece it can capture
 		Piece[] highestValPiece = highestValuePieceAbleToCapture(player.getEnemySide());
 		if (highestValPiece[0] != null) { //if there's piece in danger
-			defense(player);
+			moveToSafeSquare(player);
 		} else {
 			/*
 			 * if own pieces are not in danger, check if it's possible
@@ -342,7 +342,7 @@ public class PlayerAI extends Player {
 			 * 
 			 * if there's no piece to capture, advance piece normally.
 			 */
-			attack(player);
+			captureEnemyPiece(player);
 		}
 	}
 	
@@ -350,7 +350,7 @@ public class PlayerAI extends Player {
 	 * If piece in danger move to a safe square.
 	 * @param player
 	 */
-	public void defense(Player player) {
+	public void moveToSafeSquare(Player player) {
 		//get an array containing enemy piece and the highest value piece it can capture
 		Piece[] highestValPiece = highestValuePieceAbleToCapture(player.getEnemySide());
 		//get the highest value piece that enemy can capture
@@ -417,7 +417,7 @@ public class PlayerAI extends Player {
 //			} else {
 //				attack(player);
 //			}
-			attack(player);
+			captureEnemyPiece(player);
 		}
 	}
 	
@@ -428,7 +428,7 @@ public class PlayerAI extends Player {
 	 * If no piece can be captured move normally.
 	 * @param player
 	 */
-	public void attack(Player player) {
+	public void captureEnemyPiece(Player player) {
 		/*
 		 * get all pieces that can be captured by current player.
 		 * first arraylist contains own pieces that can capture.

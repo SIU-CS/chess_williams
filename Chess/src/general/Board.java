@@ -329,20 +329,6 @@ public class Board {
 	}
 	
 	/**
-	 * Saves game state to a file.
-	 */
-	public void saveGame() {
-		
-	}
-	
-	/**
-	 * Loads game state from a file.
-	 */
-	public void loadGame() {
-		
-	}
-	
-	/**
 	 * Add pieces to arraylist.
 	 */
 	public void createPieces() {

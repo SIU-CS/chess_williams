@@ -29,6 +29,7 @@ import player.PlayerHuman;
 public class Game {
 	
 	private int whosTurn;
+	static int MOVE_LIMIT = 50;
 	
 	//get player color who's turn it is
 	public int getWhosTurn() {
@@ -210,7 +211,7 @@ public class Game {
 			System.out.println("Player1: White");
 			System.out.println("Player2: Black");
 			//limit moves to 50
-			loop: for (int i=0; i<50; i++) {
+			loop: for (int i=0; i<MOVE_LIMIT; i++) {
 				player2.doBestMove(player1);
 				player2.doBestMove(player2);
 				System.out.println((i+1)+". round");
