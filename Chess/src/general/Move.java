@@ -87,26 +87,7 @@ public class Move {
 					ListIterator<Integer> xList = x.listIterator();  //row iterator
 					ListIterator<Integer> yList = y.listIterator();  //column iterator
 					int xL, yL;
-					while (xList.hasNext() && yList.hasNext()) { //while lists have coordinates
-						//listiterator next() method doesn't work inside if statement -> assign to variables
-						xL = xList.next();
-						yL = yList.next();
-						if (newLoc.getX()==xL && newLoc.getY()==yL) { //legal move
-							getBoard().removePiece(newLoc.getX(), newLoc.getY()); //remove captured piece from the board
-							piece.setRow(newLoc.getX()); //change piece row
-							piece.setCol(newLoc.getY()); //change piece column
-//							board.updateGameState(); //populate the board with new location of pieces.
-							//place source and destination square to history of moves
-							if (player.getSide()==0) { //if white
-								getHistoryOfMoves().addWhiteMove(srcSq, destSq); //add white piece move to history
-							} else if (player.getSide()==1) { //if black
-								getHistoryOfMoves().addBlackMove(srcSq, destSq); //add black piece move to history
-							}
-							//promote pawns to queens if they reach enemy's end
-							getBoard().promotePawnsToQueen(player.getSide());
-							return true; //move successful
-						}
-					}
+					playLoop(player, srcSq, destSq, piece, newLoc, xList, yList);
 				}
 			} else {
 				System.out.println("Not a valid destination square. ");
@@ -115,6 +96,32 @@ public class Move {
 			System.out.println("Not a valid source notation.");
 		}
 		return false; //move failed, not own piece
+	}
+
+	private void playLoop(Player player, String srcSq, String destSq, Piece piece, Index newLoc,
+			ListIterator<Integer> xList, ListIterator<Integer> yList) {
+		int xL;
+		int yL;
+		while (xList.hasNext() && yList.hasNext()) { //while lists have coordinates
+			//listiterator next() method doesn't work inside if statement -> assign to variables
+			xL = xList.next();
+			yL = yList.next();
+			if (newLoc.getX()==xL && newLoc.getY()==yL) { //legal move
+				getBoard().removePiece(newLoc.getX(), newLoc.getY()); //remove captured piece from the board
+				piece.setRow(newLoc.getX()); //change piece row
+				piece.setCol(newLoc.getY()); //change piece column
+//							board.updateGameState(); //populate the board with new location of pieces.
+				//place source and destination square to history of moves
+				if (player.getSide()==0) { //if white
+					getHistoryOfMoves().addWhiteMove(srcSq, destSq); //add white piece move to history
+				} else if (player.getSide()==1) { //if black
+					getHistoryOfMoves().addBlackMove(srcSq, destSq); //add black piece move to history
+				}
+				//promote pawns to queens if they reach enemy's end
+				getBoard().promotePawnsToQueen(player.getSide());
+				
+			}
+		}
 	}
 	
 	/**
